@@ -1,6 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
-
+import jwt from "jsonwebtoken";
 export const register=async (req,res)=>{
     const {username,email,password} = req.body;
     try{
@@ -18,15 +20,15 @@ export const register=async (req,res)=>{
             }
         });
 
-    console.log(newUser);
+        console.log(newUser);
     
-    res.status(201).json({message:"User registered successfully"});
+        res.status(201).json({message:"User registered successfully"});
+
     }
     catch(error){
         console.error(error);
         res.status(500).json({message:"Failed to create new user"});
     }
-
 }
 
 export const login=async (req,res)=>{
@@ -53,8 +55,14 @@ export const login=async (req,res)=>{
         //generate cookie token
 
         //res.setHeader("Set-Cookie","test="+"myValue").json("success");
+
         const age=1000*60*60*24*7;
-        res.cookie("test2","myValue2",{
+        const token=jwt.sign({
+            id:user.id
+        },process.env.JWT_SECRET_KEY,{expiresIn:age});
+
+
+        res.cookie("token",token,{
             httpOnly:true,
             // secure:true
             maxAge:age
@@ -69,6 +77,7 @@ export const login=async (req,res)=>{
 
 
 export const logout=(req,res)=>{
-    //db operations
+    res.clearCookie("token").status(200).json({message:"logout successfully"});
+
 }
 
