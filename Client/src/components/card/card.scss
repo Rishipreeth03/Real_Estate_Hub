@@ -50,6 +50,42 @@
            width: max-content;
 
         }
+        .bottom{
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+
+            .features{
+                display: flex;
+                gap: 200px;
+                font-size: 14px;
+                .feature{
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    background-color: whitesmoke;
+                    
+                }
+
+
+            }
+            .icons{
+                display: flex;
+                gap: 20px;
+                .icon{
+                    border:1px solid #999;
+                    padding: 2px 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    &:hover{
+                        background-color: lightgray;
+                    }
+                }
+            }
+        }
 
     }
 }
