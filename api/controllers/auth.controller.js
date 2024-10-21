@@ -5,6 +5,8 @@ import prisma from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 export const register=async (req,res)=>{
     const {username,email,password} = req.body;
+
+    
     try{
 
         //Hashing the password
@@ -27,7 +29,7 @@ export const register=async (req,res)=>{
     }
     catch(error){
         console.error(error);
-        res.status(500).json({message:"Failed to create new user"});
+        res.status(500).json({message:"Failed to create new user",error: error.message});
     }
 }
 
@@ -58,15 +60,18 @@ export const login=async (req,res)=>{
 
         const age=1000*60*60*24*7;
         const token=jwt.sign({
-            id:user.id
+            id:user.id,
+            isAdmin:false,
         },process.env.JWT_SECRET_KEY,{expiresIn:age});
+
+        const {password:userPassword,...userInfo}=user;
 
 
         res.cookie("token",token,{
             httpOnly:true,
             // secure:true
             maxAge:age
-        }).status(200).json({message:"Login successful"});
+        }).status(200).json(userInfo);
     }
     catch(error){
         console.error(error);

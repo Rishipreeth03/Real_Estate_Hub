@@ -1,8 +1,12 @@
 // @flow 
 import "./HomePage.scss";
-import SearchBar from "../../components/searchbar/SearchBar"; "../../components/searchbar/SearchBar";
+import SearchBar from "../../components/searchbar/SearchBar"; 
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 export default function HomePage(){
+    const {currentUser}=useContext(AuthContext);
+    console.log(currentUser);
     return (
        <div className="homePage">
         <div className="textContainer">
