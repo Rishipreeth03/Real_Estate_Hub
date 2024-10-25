@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import {AuthContext} from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
+
 export default function ProfilePage() {
 
   const {updateUser,currentUser}=useContext(AuthContext);
@@ -50,7 +51,9 @@ export default function ProfilePage() {
 
           <div className="title">
             <h1>My List</h1>
-            <button> Create New Post</button>
+            <Link to={"/add"}>
+              <button> Create New Post</button>
+            </Link>
           </div>
           <List/>
 
